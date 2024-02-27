@@ -53,8 +53,7 @@ export default function Carousel() {
                   <SwiperSlide key={i} className="text-white text-center">
                     <div className="flex w-full h-full justify-center items-center">
                       <Image
-                        src={`https://image.tmdb.org/t/p/original/${slide.backdrop_path}
-                  `}
+                        src={`https://image.tmdb.org/t/p/original/${slide.backdrop_path}`}
                         width={1920}
                         height={1080}
                         alt={slide.original_name || slide.original_title}
