@@ -8,7 +8,7 @@ type LogoProps = {
 export default function Logo(props: LogoProps) {
   return (
     <div>
-      <Image width={40} height={40} src={props.imgData} alt={props.imgAlt} />
+      <Image width={30} height={30} src={props.imgData} alt={props.imgAlt} />
     </div>
   )
 }

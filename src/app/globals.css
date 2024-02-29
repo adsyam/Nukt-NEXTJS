@@ -12,4 +12,5 @@
 body {
   background: #0d0d0d;
   height: 100dvh;
+  position: relative;
 }

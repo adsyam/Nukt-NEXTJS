@@ -6,7 +6,7 @@ export type MediaType = "movie" | "tv"
 export type Category = "Popular" | "Trending" | "Top Rated"
 
 export default function MainPage() {
-  const category: Category[] = ["Popular", "Trending", "Top Rated"]
+  const category: Category[] = ["Trending", "Top Rated", "Popular"]
 
   const categoryType = category.map((type) => {
     return <MediaCard key={type} category={type} />

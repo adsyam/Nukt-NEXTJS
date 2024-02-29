@@ -1,6 +1,5 @@
 "use client"
-// import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
-// import FontAwesomeIcon from "@fortawesome/fontawesome-svg-core"
+
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"

@@ -1,34 +1,24 @@
 "use server"
 
 export type MediaProps = {
-  results: {
-    backdrop_path: string
-    poster_path: string
-    original_title: string
-    title: string
-    name: string
-    id: number
-    release_date: string
-    first_air_date: string
-    vote_average: number
-    media_type: string
-    original_name: string
-  }[]
+  results: MediaResult[]
 }
 
-// export type MediaProps = {
-//   backdrop_path: string
-//   poster_path: string
-//   original_title: string
-//   title: string
-//   name: string
-//   id: number
-//   release_date: string
-//   first_air_date: string
-//   vote_average: number
-//   media_type: string
-//   original_name: string
-// }
+export type MediaResult = {
+  backdrop_path: string
+  poster_path: string
+  original_title: string
+  title: string
+  name: string
+  id: number
+  release_date: string
+  first_air_date: string
+  vote_average: number
+  media_type: "movie" | "tv" | "people"
+  overview: string
+  original_name: string
+  genre_ids: string[]
+}
 
 export const getPopular = async (
   mediaType: "movie" | "tv",
