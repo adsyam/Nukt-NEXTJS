@@ -1,13 +1,21 @@
+import MediaCard from "@/components/cards/media-card"
 import Carousel from "@/components/carousel/carousel"
-import Main from "@/components/main"
 
-export default function Home() {
+export type MediaType = "movie" | "tv"
+export type Category = "Popular" | "Trending" | "Top Rated"
+
+const Home = () => {
+  const category: Category[] = ["Trending", "Top Rated", "Popular"]
+
+  const categoryType = category.map((type) => {
+    return <MediaCard key={type} category={type} />
+  })
   return (
     <>
       <Carousel />
-      <div className="container m-auto p-4">
-        <Main />
-      </div>
+      <div className="container md:px-20">{categoryType}</div>
     </>
   )
 }
+
+export default Home

@@ -1,9 +1,9 @@
 type GenreListProps = {
   genreIds: string
-  mediaType: "tv" | "movie" | 'people'
+  mediaType: "tv" | "movie" | "people"
 }
 
-export default function GenreList({ genreIds, mediaType }: GenreListProps) {
+const GenreList = ({ genreIds, mediaType }: GenreListProps) => {
   const seriesGenreList = [
     {
       id: 10759,
@@ -167,5 +167,7 @@ export default function GenreList({ genreIds, mediaType }: GenreListProps) {
           )
         })
 
-  return <>{convertedGenre}</>
+  return convertedGenre
 }
+
+export default GenreList

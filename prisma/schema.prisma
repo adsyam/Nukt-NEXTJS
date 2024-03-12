@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  username   String    @unique
+  email      String
+  password   String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Comments   Comments[]
+}
+
+model Comments {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  user_id   String  @unique @db.ObjectId
+  parent_id String?
+  media_id  Int
+  content   String
+
+  user User @relation(fields: [user_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model History {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  media_id    Int
+  media_type  String
+  poster_path String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Favorite {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  media_id    Int
+  media_type  String
+  poster_path String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}

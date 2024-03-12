@@ -1,33 +1,30 @@
 "use server"
 
-export type MediaProps = {
-  results: MediaResult[]
+export type SearchProps = {
+  results: SearchResults[]
 }
 
-export type MediaResult = {
-  adult: boolean
-  backdrop_path: string
+export type SearchResults = {
   poster_path: string
-  original_title: string
-  title: string
-  name: string
   id: number
-  release_date: string
-  first_air_date: string
-  vote_average: number
-  media_type: "movie" | "tv" | "people"
-  overview: string
   original_name: string
-  genre_ids: string[]
+  original_title: string
+  name: string
+  title: string
+  overview: string
+  first_air_date: string
+  release_date: string
+  vote_average: number
 }
 
-export const getPopular = async (
-  mediaType: "movie" | "tv",
+export const getSearch = async (
+  mediaType: "tv" | "movie",
+  term: string,
   page: number = 1
-): Promise<MediaProps | undefined> => {
+): Promise<SearchProps | undefined> => {
   try {
     const res = await fetch(
-      `https://api.themoviedb.org/3/${mediaType}/popular?page=${page}`,
+      `https://api.themoviedb.org/3/search/${mediaType}?query=${term}&page=${page}`,
       {
         method: "GET",
         headers: {

@@ -2,11 +2,11 @@
 
 import { getPopular, getTopRated, getTrending } from "@/actions"
 import { MediaProps, MediaResult } from "@/actions/popular"
+import { Category } from "@/app/page"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { Category } from "../main"
 import CardPreview from "../modal/card-preview"
 import MediaSwitch from "./media-switch"
 
@@ -20,11 +20,13 @@ export type ShowPreviewProps = {
 
 export type MediaType = "movie" | "tv"
 
-export default function MediaCard({ category }: MediaCardProps) {
+const MediaCard = ({ category }: MediaCardProps) => {
   const [media, setMedia] = useState<MediaType>("tv")
   const [data, setData] = useState<MediaProps | undefined>()
   const [isLoading, setIsLoading] = useState(true)
-  const [isShowPreview, setIsShowPreview] = useState<ShowPreviewProps>({})
+  const [isShowPreview, setIsShowPreview] = useState<ShowPreviewProps>({
+    0: false,
+  })
   const [pageNumber, setPageNumber] = useState(1)
 
   useEffect(() => {
@@ -48,69 +50,70 @@ export default function MediaCard({ category }: MediaCardProps) {
   const MotionLink = motion(Link)
   const MotionImage = motion(Image)
 
-  const imageHover = (isHovered: boolean, id: number) => {
+  const imgHover = (isHovered: boolean, id: number) => {
     setIsShowPreview({ [id]: isHovered })
   }
 
   const cards = data?.results
     .filter((pop: MediaResult) => pop.backdrop_path && pop.poster_path)
-    .map((pop: MediaResult, i) => {
+    .map((pop: MediaResult) => {
       return (
-        <div key={pop.id} className="relative">
-          <motion.div
-            onMouseEnter={() => imageHover(true, pop.id)}
-            onMouseLeave={() => imageHover(false, pop.id)}
-            whileHover={{ scale: 1.05 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 10,
-            }}
+        <motion.div
+          key={pop.id}
+          className="relative"
+          onMouseEnter={() => imgHover(true, pop.id)}
+          onMouseLeave={() => imgHover(false, pop.id)}
+          whileHover={{ scale: 1.05 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 10,
+          }}
+        >
+          <MotionLink
+            href={
+              media === "tv"
+                ? `/watch/tv/${pop.id}?server=1&season=1&episode=1&filter=best`
+                : `/watch/movie/${pop.id}?server=1&filter=best`
+            }
           >
-            <MotionLink
-              href={
-                media === "tv"
-                  ? `/watch/tv/${pop.id}?season=1&episode=1`
-                  : `/watch/movie/${pop.id}`
-              }
-            >
-              <div className="space-y-1">
-                <div className="relative">
-                  <MotionImage
-                    // whileHover={{ filter: "brightness(0.75)" }}
-                    alt={pop.title || pop.name}
-                    className="rounded w-full h-auto"
-                    width={320}
-                    height={480}
-                    src={`https://image.tmdb.org/t/p/original/${pop.poster_path}`}
-                  />
-                  <p className="text-stone-200 absolute bottom-1 right-1 border border-black/40 bg-slate-700/30 px-2 rounded-lg">
-                    {pop.vote_average.toFixed(1)}
-                  </p>
-                </div>
-                <div className="text-stone-300">
-                  <p className="text-md line-clamp-1">
-                    {pop.title || pop.name}
-                  </p>
-                  <p className="text-sm">
-                    {(pop.release_date && pop.release_date.split("-")[0]) ||
-                      (pop.first_air_date && pop.first_air_date.split("-")[0])}
-                  </p>
-                </div>
+            <div className="space-y-1 flex flex-col">
+              <div className="relative">
+                <MotionImage
+                  alt={pop.title || pop.name}
+                  className="rounded w-full h-auto object-cover"
+                  width={320}
+                  height={480}
+                  src={`https://image.tmdb.org/t/p/original/${pop.poster_path}`}
+                />
+                <span className="absolute bottom-1 right-1 bg-stone-700/30 px-2 rounded-lg backdrop-blur-sm">
+                  {pop.vote_average.toFixed(1)}
+                </span>
               </div>
-            </MotionLink>
-          </motion.div>
+              <div className="flex flex-col">
+                <p className="line-clamp-1">{pop.title || pop.name}</p>
+                <p className="text-stone-400 text-xs">
+                  {(pop.release_date && pop.release_date.split("-")[0]) ||
+                    (pop.first_air_date && pop.first_air_date.split("-")[0])}
+                </p>
+              </div>
+            </div>
+          </MotionLink>
           <CardPreview
             isShowPreview={isShowPreview[pop.id]}
             cardData={pop}
             mediaType={media}
+            mediaId={pop.id}
           />
-        </div>
+        </motion.div>
       )
     })
 
+  const cardGrids =
+    "grid gap-5 mb-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-8"
+
   return (
-    <div className="mx-20">
+    <>
       <MediaSwitch
         media={media}
         setMedia={setMedia}
@@ -119,12 +122,23 @@ export default function MediaCard({ category }: MediaCardProps) {
         pageNumber={pageNumber}
       />
       {isLoading ? (
-        Array.from({ length: 16 }, (_, i) => {
-          return <div key={i} className="h-[35vh]"></div>
-        })
+        <div className="grid gap-5 place-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7">
+          {Array.from({ length: 20 }, (_, i) => {
+            return (
+              <div
+                key={i}
+                className="h-[30dvh] w-full rounded-md animate-pulse bg-stone-400/30"
+              ></div>
+            )
+          })}
+        </div>
       ) : (
-        <div className="grid grid-cols-8 gap-5 mb-12">{cards}</div>
+        <div className="grid gap-5 mb-12 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7">
+          {cards}
+        </div>
       )}
-    </div>
+    </>
   )
 }
+
+export default MediaCard

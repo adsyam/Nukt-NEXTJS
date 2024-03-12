@@ -1,3 +1,5 @@
+export { getMediaDetails } from "./media-details"
 export { getPopular } from "./popular"
-export { getTrending, getAllTrending } from "./trending"
+export { getSearch } from "./search"
 export { getTopRated } from "./top-rated"
+export { getAllTrending, getTrending } from "./trending"

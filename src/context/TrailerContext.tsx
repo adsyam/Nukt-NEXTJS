@@ -36,11 +36,11 @@ const TrailerDefault: TrailerProps = {
 
 const TrailerContext = createContext<TrailerProps>(TrailerDefault)
 
-export function useTrailer() {
+export const useTrailer = () => {
   return useContext(TrailerContext)
 }
 
-export function TrailerProvider({ children }: ProviderProps) {
+export const TrailerProvider = ({ children }: ProviderProps) => {
   const [isTrailerOpen, setIsTrailerOpen] = useState(false)
   const [mediaType, setMediaType] = useState<
     TrailerProps["mediaType"] | undefined

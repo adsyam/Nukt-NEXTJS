@@ -1,16 +1,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Madimi+One&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  font-family: "Poppins", "Figtree", sans-serif;
+@layer components {
+  .container {
+    @apply w-full mx-auto px-3 py-2;
+  }
+}
+
+@layer base {
+  h1 {
+    @apply text-5xl;
+  }
+  h2 {
+    @apply text-4xl;
+  }
+  h3 {
+    @apply text-3xl;
+  }
+  h4 {
+    @apply text-2xl;
+  }
+  h5 {
+    @apply text-xl;
+  }
+  h6 {
+    @apply text-lg;
+  }
+  p {
+    @apply text-base;
+  }
+  small {
+    @apply text-sm;
+  }
+  span {
+    @apply block text-base
+  }
+}
+
+.responsive-text {
+  @apply text-stone-200 text-xs;
 }
 
 body {
   background: #0d0d0d;
   height: 100dvh;
-  position: relative;
+  @apply text-stone-200
 }

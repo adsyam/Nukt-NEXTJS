@@ -1,9 +1,9 @@
 "use client"
 
+import { Category, MediaType } from "@/app/page"
 import { motion } from "framer-motion"
 import { Dispatch, SetStateAction } from "react"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
-import { Category, MediaType } from "../main"
 
 type MediaSwitchProps = {
   media: MediaType
@@ -13,17 +13,19 @@ type MediaSwitchProps = {
   setPageNumber: Dispatch<SetStateAction<number>>
 }
 
-export default function MediaSwitch({
+const MediaSwitch = ({
   media,
   setMedia,
   category,
   pageNumber,
   setPageNumber,
-}: MediaSwitchProps) {
+}: MediaSwitchProps) => {
   return (
     <div className="flex justify-between gap-2 pb-4 items-center mt-12">
-      <div className="flex gap-2">
-        <h1 className="text-stone-200 text-2xl uppercase">{category}</h1>
+      <div className="flex gap-2 items-center">
+        <span className="text-stone-200 text-2xl uppercase screen-360:text-xl font-normal screen-360:font-bold screen-576:font-normal">
+          {category}
+        </span>
         <div className="space-x-1">
           <motion.button
             whileTap={{ scale: 1.1 }}
@@ -55,7 +57,7 @@ export default function MediaSwitch({
         >
           <FaAngleLeft />
         </motion.button>
-        <h2>{pageNumber}</h2>
+        <span>{pageNumber}</span>
         <motion.button
           whileHover={{ scale: 1.1, color: "#7300FF" }}
           onClick={() => setPageNumber(pageNumber! + 1)}
@@ -66,3 +68,5 @@ export default function MediaSwitch({
     </div>
   )
 }
+
+export default MediaSwitch
